@@ -1,0 +1,107 @@
+#The Vagrant File
+
+mkdir nginx
+
+cd nginx
+
+vagrant init hashicorp/precise32
+
+#Open the Vagrant File
+
+vagrant init hashicorp/precise32 --minimal
+
+#Installing Nginx Manually
+----------
+apt-get -y update
+
+apt-get -y install nginx
+
+service nginx start
+-----------
+
+#Installing Nginx through Provisioning
+
+----------
+#Modify the Vagrant File with Provision command
+
+Vagrant.configure("2") do |config|                 
+  config.vm.box = "hashicorp/precise32"            
+  config.vm.hostname = "webserver"                 
+                                                   
+  config.vm.provision "shell", path: "provision.sh"
+end                                                
+
+---------
+#Create Provision.sh file on the same directory
+apt-get -y update
+
+apt-get -y install nginx
+
+service nginx start
+
+-----------
+# Reload the VM
+
+vagrant reload
+
+#If Machine already starts then run below command to provision the script
+
+vagrant provision
+
+#ssh into the VM and check nginx service
+
+sudo service nginx status
+
+#open index.html on the VM
+wget -qO- localhost
+
+#forward port 80
+
+#modify the vagrant file
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "hashicorp/precise32"
+  config.vm.hostname = "webserver"
+
+  config.vm.provision "shell", path: "provision.sh"
+  config.vm.network "forwarded_port", guest:80, host:8080, id: :"nginx"
+end
+
+#auto correct for forwarded port
+
+config.vm.network "forwarded_port", guest:80, host:8080, id: :"nginx" auto_correc: true
+
+#private networks
+
+#public networks
+
+#Sharing and Versioning website files
+
+cp -r /usr/share/nginx/www /vagrant/www
+
+sudo rm -rf /usr/share/nginx/www
+
+sudo ln -s /vagrant/www /usr/share/nginx/www
+
+
+-----------------
+vagrant share
+
+#setup an account on vagrantcloud.com
+
+vagrant login
+
+#install ngrox to share your app/vm
+
+https://ngrok.com/download
+
+extract ngrok.exe file and copy in to the path where we are running cmdler and set PATH for ngrok.exe
+
+#type below command to share app
+
+vagrant share
+
+#We can share VM if we pass --ssh tag to the above command
+
+vagrant share --ssh
+
