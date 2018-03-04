@@ -9,6 +9,16 @@ cmder shell Download Path : http://cmder.net/
 
 vagrant -v
 
+Open https://app.vagrantup.com/boxes/search and search the box which you wanted to install.
+ex: If we wanted to install Ubuntu VM then we need to search for Ubuntu and then click on the box name
+
+
+ubuntu/trusty64 Vagrant box
+
+and then copy the code (or) click on new and copy the command
+   
+    vagrant init ubuntu/trusty64
+
 #Create First Image
 
 mkdir ubuntu
